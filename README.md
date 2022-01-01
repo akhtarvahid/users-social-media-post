@@ -22,4 +22,14 @@ Download and install docker based on your devices(Linux/Windows/Mac) - https://d
 
 * 
 
-### Frontend setup
+### Front-end setup
+
+* In another terminal
+
+  ``cd fronted``
+
+  ``npm install``
+
+  ``npm start``
+
+  
