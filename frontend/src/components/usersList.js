@@ -6,11 +6,12 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import Text from './common/Text';
 
 export default function UsersList({ users }) {
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-         {users.map((user, i) => 
+         {users?.length > 0 ? users.map((user, i) => 
           <React.Fragment key={user.id}>
               <ListItem alignItems="flex-start">
           <ListItemAvatar>
@@ -28,6 +29,8 @@ export default function UsersList({ users }) {
                 >
                   Work @{user.workAt}
                 </Typography>
+                <Text sx={{ display: 'inline' }} content='Records not found!' component='span' variant="body2"
+                  color="text.primary"/>
                 <span> as </span>{user.designation}
               </React.Fragment>
             }
@@ -35,7 +38,9 @@ export default function UsersList({ users }) {
         </ListItem>
         {(i + 1 !== users.length) && <Divider variant="inset" component="li" />}
           </React.Fragment>   
-         )}
+         ):
+         <Text content='Records not found!' component='p' />
+         }
       </List>
     )
 }
