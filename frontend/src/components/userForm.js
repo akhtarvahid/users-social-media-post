@@ -14,10 +14,10 @@ function UserForm({
    return (
        <Box
          sx={{
-          width: 500,
           maxWidth: '100%',
-          gap: 2,
-         }}>
+          px: 1        
+         }}
+         >
            <FormControl fullWidth>
              <TextField margin='dense' label="First Name" name="firstName" onChange={handleInput} value={firstName} />
              <TextField margin='dense' label="Last Name" name="lastName" onChange={handleInput} value={lastName} />

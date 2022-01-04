@@ -18,7 +18,7 @@ export default function UsersList({ users }) {
             <Avatar alt={user.firstName} src="/static/images/avatar/3.jpg" />
           </ListItemAvatar>
           <ListItemText
-            primary={`${user.firstName} ${user.lastName}`}
+            primary={<span style={{ fontWeight: 600 }}>{`${user.firstName} ${user.lastName}`}</span>}
             secondary={
               <React.Fragment>
                 <Typography
@@ -27,10 +27,8 @@ export default function UsersList({ users }) {
                   variant="body2"
                   color="text.primary"
                 >
-                  Work @{user.workAt}
+                  Work <span style={{ fontWeight: 700 }}>@</span>{user.workAt}
                 </Typography>
-                <Text sx={{ display: 'inline' }} content='Records not found!' component='span' variant="body2"
-                  color="text.primary"/>
                 <span> as </span>{user.designation}
               </React.Fragment>
             }

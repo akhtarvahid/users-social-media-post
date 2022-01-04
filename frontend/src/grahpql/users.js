@@ -1,26 +1,28 @@
 import { gql } from "@apollo/client";
 
+const usersFragment = gql`
+    fragment UserTypeFragment on UserType {
+        id
+        firstName
+        lastName
+        workAt
+        designation
+}`;
 
 export const USERS = gql`
   query users {
    users {
-     lastName
-     firstName
-     id
-     workAt
-     designation
+     ...UserTypeFragment
    }
-  }
+ }
+  ${usersFragment}
 `;
 
 export const CREATE_USER = gql`
    mutation CreateUser($createUserData: CreateUserInput!) {
     createUser(createUserData: $createUserData) {
-       id
-       lastName
-       firstName
-       workAt
-       designation
+       ...UserTypeFragment
     }
-   }
+ }
+  ${usersFragment}
 `
