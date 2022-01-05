@@ -20,7 +20,7 @@ Download and install docker based on your devices(Linux/Windows/Mac) - https://d
      
      ``npm run start:dev``
 
-* 
+* Graphql playground - http://localhost:3333/graphql
 
 ### Front-end setup
 
@@ -33,3 +33,9 @@ Download and install docker based on your devices(Linux/Windows/Mac) - https://d
   ``npm start``
 
   
+
+### To check local database
+* Download and install software - https://robomongo.org/download
+* Click on **Download Robo 3T**
+* Once downloaded and installed
+* Setup server of Robo 3T

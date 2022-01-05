@@ -8,9 +8,7 @@ import { ApolloProvider } from '@apollo/client';
 ReactDOM.render(
   <React.StrictMode>
    <ApolloProvider client={client}>
-      <div className="App">
-        <App />
-      </div>
+     <App />
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

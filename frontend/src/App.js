@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_USER, USERS } from './grahpql/users';
+import { CREATE_USER, DELETE_USER, USERS } from './grahpql/users';
 import UsersList from './components/usersList';
 import Grid from '@mui/material/Grid';
 import UserForm from './components/userForm';
@@ -9,9 +9,6 @@ import Loader from './components/Loader';
 import Text from './components/common/Text';
 
 function App() {
-  const { data, loading, refetch: refetchUsers } = useQuery(USERS, {
-    fetchPolicy: "network-only"
-  });
   const [isFilled, setIsFilled] = useState(true);
   const [user, setUser] = useState({
     firstName: '',
@@ -19,7 +16,12 @@ function App() {
     workAt: '',
     designation: ''
   });
+
+  const { data, loading, refetch: refetchUsers } = useQuery(USERS, {
+    fetchPolicy: "network-only"
+  });
   const [createUser, {loading: createUserLoading}] = useMutation(CREATE_USER);
+  const [deleteUser] = useMutation(DELETE_USER, { refetchQueries: [{ query: USERS }], });
 
   useEffect(() => {
      const fields = Object.values(user).filter(usr => usr!=='');
@@ -54,6 +56,14 @@ function App() {
     }
    });
   }
+  const handleDelete = async (selectedId) => {
+    await deleteUser({
+      variables: {
+        id: selectedId
+      }
+    })
+    refetchUsers();
+  }
 
   return (
     <>
@@ -64,12 +74,12 @@ function App() {
         <Text content='Create Users' component='h3' />
       </Divider>
       <Grid container spacing={2} padding='20px'>
-       <Grid item xs={12} md={8}>
+       <Grid item xs={12} md={8} display={createUserLoading ? 'flex' : 'block'} justifyContent='center'>
         {createUserLoading ? <Loader /> :  <UserForm user={user} handleInput={handleInput} isFilled={isFilled} handleSubmit={handleSubmit} />}
        </Grid>
        <Grid item xs={12} md={4}>
         <Text content='Users list' component='h3' />
-        {loading ? <Loader /> : <UsersList users={data.users} />}
+        {loading ? <Loader /> : <UsersList users={data.users} handleDelete={handleDelete} />}
        </Grid>
       </Grid>
     </>

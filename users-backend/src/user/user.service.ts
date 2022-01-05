@@ -44,7 +44,6 @@ export class UserService {
     postIds: string[],
   ): Promise<UserEntity> {
     const post = await this.getUser(userId);
-    console.log(post);
     post.userPosts = [...post.userPosts, ...postIds];
     return this.userRepository.save(post);
   }

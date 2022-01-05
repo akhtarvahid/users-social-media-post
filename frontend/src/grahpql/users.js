@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
 const usersFragment = gql`
-    fragment UserTypeFragment on UserType {
-        id
-        firstName
-        lastName
-        workAt
-        designation
+  fragment UserTypeFragment on UserType {
+    id
+    firstName
+    lastName
+    workAt
+    designation
 }`;
 
 export const USERS = gql`
@@ -26,3 +26,15 @@ export const CREATE_USER = gql`
  }
   ${usersFragment}
 `
+
+export const DELETE_USER = gql`
+  mutation DeleteUser($id: String!){
+  deleteUser(id: $id) {
+    id
+    lastName
+    firstName
+    workAt
+    designation
+  }
+}
+`;

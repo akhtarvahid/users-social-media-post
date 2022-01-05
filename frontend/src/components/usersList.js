@@ -7,18 +7,25 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Text from './common/Text';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function UsersList({ users }) {
+export default function UsersList({ users, handleDelete }) {
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
          {users?.length > 0 ? users.map((user, i) => 
           <React.Fragment key={user.id}>
-              <ListItem alignItems="flex-start">
+          <ListItem alignItems="flex-start">
           <ListItemAvatar>
             <Avatar alt={user.firstName} src="/static/images/avatar/3.jpg" />
           </ListItemAvatar>
           <ListItemText
-            primary={<span style={{ fontWeight: 600 }}>{`${user.firstName} ${user.lastName}`}</span>}
+            primary={
+              <span style={{ fontWeight: 600 }}>
+               {`${(user.firstName?.length > 10 || user.lastName?.length > 10) 
+                ? user.firstName 
+                : `${user.firstName} ${user.lastName}`}`
+               }
+              </span>}
             secondary={
               <React.Fragment>
                 <Typography
@@ -33,6 +40,7 @@ export default function UsersList({ users }) {
               </React.Fragment>
             }
           />
+          <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => handleDelete(user.id)} />
         </ListItem>
         {(i + 1 !== users.length) && <Divider variant="inset" component="li" />}
           </React.Fragment>   
