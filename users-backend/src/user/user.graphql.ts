@@ -42,19 +42,10 @@ export class CreateUserInput {
   userPosts: string[];
 }
 
-@InputType()
-export class DeleteUserInput {
+@ObjectType()
+export class DeleteUserResponseType {
   @Field()
-  firstName: string;
-
-  @Field()
-  lastName: string;
-
-  @Field()
-  workAt?: string;
-
-  @Field()
-  designation?: string;
+  message: string;
 }
 
 @InputType()

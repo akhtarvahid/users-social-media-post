@@ -32,11 +32,11 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  async deleteUser(id: string): Promise<UserEntity> {
+  async deleteUser(id: string) {
     const found = await this.getUser(id);
     if (found) this.userRepository.delete({ id });
 
-    return found;
+    return { message: `Successfully deleted user of ${found.id}` };
   }
 
   async assignPostsToUser(

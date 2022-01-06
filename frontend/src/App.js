@@ -10,6 +10,7 @@ import Text from './components/common/Text';
 
 function App() {
   const [isFilled, setIsFilled] = useState(true);
+  const [selected, setSelected] = useState(null);
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -57,11 +58,14 @@ function App() {
    });
   }
   const handleDelete = async (selectedId) => {
-    await deleteUser({
-      variables: {
-        id: selectedId
-      }
-    })
+    setSelected(selectedId)
+    setTimeout(async () => {
+      await deleteUser({
+        variables: {
+          id: selectedId
+        }
+      });
+    }, 1000);
     refetchUsers();
   }
 
@@ -79,7 +83,7 @@ function App() {
        </Grid>
        <Grid item xs={12} md={4}>
         <Text content='Users list' component='h3' />
-        {loading ? <Loader /> : <UsersList users={data.users} handleDelete={handleDelete} />}
+        {loading ? <Loader /> : <UsersList deletedSpinner selected={selected} users={data.users} handleDelete={handleDelete} />}
        </Grid>
       </Grid>
     </>
