@@ -1,5 +1,5 @@
 import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
-import { IsUUID } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 import { PostType } from 'src/post/post.graphql';
 
 @ObjectType()
@@ -40,6 +40,21 @@ export class CreateUserInput {
   @IsUUID('4', { each: true })
   @Field(() => [ID], { defaultValue: [] })
   userPosts: string[];
+}
+
+@InputType()
+export class UpdateUserInput {
+  @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
+  workAt?: string;
+
+  @Field()
+  designation?: string;
 }
 
 @ObjectType()

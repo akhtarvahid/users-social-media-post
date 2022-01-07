@@ -11,7 +11,7 @@ import { PostEntity } from './post/post.entity';
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: 'mongodb://localhost/user-db',
-      synchronize: true,
+      synchronize: true, // use only for dev environment
       useUnifiedTopology: true,
       port: 27017,
       entities: [UserEntity, PostEntity],

@@ -34,3 +34,12 @@ export const DELETE_USER = gql`
   }
 }
 `;
+
+export const UPDATE_USER = gql`
+ mutation UpdateUser($id: String!, $updateUserInput: UpdateUserInput!) {
+  updateUser(id: $id, updateUserInput: $updateUserInput) {
+    ...UserTypeFragment
+  }
+}
+  ${usersFragment}
+`;

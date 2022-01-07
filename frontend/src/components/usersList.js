@@ -9,20 +9,20 @@ import Typography from '@mui/material/Typography';
 import Text from './common/Text';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Loader from './Loader';
-
-export default function UsersList({ selected, users, handleDelete }) {
+import EditIcon from '@mui/icons-material/Edit';
+export default function UsersList({ selected, users, handleDelete, handleEdit }) {
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
          {users?.length > 0 ? users.map((user, i) => 
           <React.Fragment key={user.id}>
           {(user.id !== selected) ? 
-          <ListItem alignItems="flex-start">
+          <ListItem alignItems="flex-start" style={{ position: 'relative' }}>
             <ListItemAvatar>
-              <Avatar alt={user.firstName} src="/static/images/avatar/3.jpg" />
+              <Avatar style={{ backgroundColor: '#005a53'}} alt={user.firstName} src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
             <ListItemText
               primary={
-                <span style={{ fontWeight: 600 }}>
+                <span style={{ fontWeight: 600, color: "#005a53" }}>
                 {`${(user.firstName?.length > 10 || user.lastName?.length > 10) 
                   ? user.firstName 
                   : `${user.firstName} ${user.lastName}`}`
@@ -36,15 +36,20 @@ export default function UsersList({ selected, users, handleDelete }) {
                     variant="body2"
                     color="text.primary"
                   >
-                    Work <span style={{ fontWeight: 700 }}>@</span>{user.workAt}
+                    Work <strong>@</strong><span style={{ fontWeight: 700 }}>{user.workAt}</span>
                   </Typography>
                   <span> as </span>{user.designation}
                 </React.Fragment>
               }
             />
+           <EditIcon 
+              color="success"
+              style={{ cursor: 'pointer' }} 
+              onClick={() => handleEdit(user.id)} 
+           /> 
            <DeleteIcon 
               color="error" 
-              style={{ cursor: 'pointer' }} 
+              style={{ cursor: 'pointer', position: 'absolute', right: '-30px' }} 
               onClick={() => handleDelete(user.id)} 
           />
           </ListItem> : <Loader />}

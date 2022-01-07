@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { CreateUserInput } from './user.graphql';
+import { CreateUserInput, UpdateUserInput } from './user.graphql';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
@@ -30,6 +30,17 @@ export class UserService {
     });
 
     return this.userRepository.save(user);
+  }
+
+  async updateUser(id: string, updateUserInput: UpdateUserInput): Promise<UserEntity> {
+     const { firstName, lastName, workAt, designation } = updateUserInput;
+     const user = await this.getUser(id);
+     user.firstName = firstName;
+     user.lastName = lastName;
+     user.workAt = workAt;
+     user.designation = designation;
+     await this.userRepository.save(user);
+     return user;
   }
 
   async deleteUser(id: string) {

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { PostService } from 'src/post/post.service';
 import { UserEntity } from './user.entity';
-import { AssignPostsToUser, CreateUserInput, DeleteUserResponseType, UserType } from './user.graphql';
+import { AssignPostsToUser, CreateUserInput, DeleteUserResponseType, UpdateUserInput, UserType } from './user.graphql';
 import { UserService } from './user.service';
 
 @Resolver(() => UserType)
@@ -34,6 +34,13 @@ export class UserResolver {
   @Mutation(() => DeleteUserResponseType)
   deleteUser(@Args('id') id: string) {
     return this.userService.deleteUser(id);
+  }
+
+  @Mutation(() => UserType)
+  updateUser(
+   @Args('id') id: string, 
+   @Args('updateUserInput') updateUserInput: UpdateUserInput){
+    return this.userService.updateUser(id, updateUserInput);
   }
 
   @Mutation(() => UserType)
