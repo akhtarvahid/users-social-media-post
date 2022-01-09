@@ -3,7 +3,7 @@ Users social media engagements
 
 ## Follow steps to run application
 
-### Backend setup
+### Backend setup steps
 Download and install docker based on your devices(Linux/Windows/Mac) - https://docs.docker.com/get-docker/
   
 * Clone repository 
@@ -22,7 +22,7 @@ Download and install docker based on your devices(Linux/Windows/Mac) - https://d
 
 * Graphql playground - http://localhost:3333/graphql
 
-### Front-end setup
+### Front-end setup steps
 
 * In another terminal
 

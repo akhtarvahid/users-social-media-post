@@ -1,7 +1,6 @@
 import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUUID, MinLength } from 'class-validator';
 import { PostType } from 'src/post/post.graphql';
-
 @ObjectType()
 export class UserType {
   @Field()
@@ -26,15 +25,21 @@ export class UserType {
 @InputType()
 export class CreateUserInput {
   @Field()
+  @IsNotEmpty()
+  @MinLength(1)
   firstName: string;
 
   @Field()
+  @IsNotEmpty()
+  @MinLength(1)
   lastName: string;
 
   @Field()
-  workAt?: string;
+  @IsOptional()
+  workAt: string;
 
   @Field()
+  @IsOptional()
   designation?: string;
 
   @IsUUID('4', { each: true })
@@ -42,18 +47,23 @@ export class CreateUserInput {
   userPosts: string[];
 }
 
+// Add validation for required and not required field
 @InputType()
 export class UpdateUserInput {
   @Field()
+  @IsOptional()
   firstName: string;
 
   @Field()
+  @IsOptional()
   lastName: string;
 
   @Field()
+  @IsOptional()
   workAt?: string;
 
   @Field()
+  @IsOptional()
   designation?: string;
 }
 

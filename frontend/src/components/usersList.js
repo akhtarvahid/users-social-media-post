@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -10,10 +10,16 @@ import Text from './common/Text';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Loader from './Loader';
 import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
+
 export default function UsersList({ selected, users, handleDelete, handleEdit }) {
+  
+    const [limit, setLimit] = useState(5);
+
     return (
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-         {users?.length > 0 ? users.map((user, i) => 
+      <>
+        {<List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
+         {users?.length > 0 ? users?.slice(0, limit).map((user, i) => 
           <React.Fragment key={user.id}>
           {(user.id !== selected) ? 
           <ListItem alignItems="flex-start" style={{ position: 'relative' }}>
@@ -58,6 +64,11 @@ export default function UsersList({ selected, users, handleDelete, handleEdit })
           ):
           <Text content='Records not found!' component='p' />
           }
-      </List>
+      </List>}
+      {users?.length > limit && 
+       <Button size="small" onClick={() => users?.length > limit && setLimit(lim => lim + 5)}>
+         Show more
+       </Button>}
+      </>
     )
 }
