@@ -62,19 +62,27 @@ function App() {
     e.preventDefault();
   
   if(updateUserId===null) {
-     await createUser({  
-      variables: {
-        createUserData: userInput
-      }
-    });
-   } else {
-    const getUser = getSingleUser(updateUserId);
-    await updateUser({
-     variables: {
-       id: getUser.id,
-       updateUserInput: userInput
+     try {
+      await createUser({  
+        variables: {
+          createUserData: userInput
+        }
+      });
+     } catch(err) {
+       console.log(err);
      }
-    });
+   } else {
+       try {
+        const getUser = getSingleUser(updateUserId);
+        await updateUser({
+         variables: {
+           id: getUser.id,
+           updateUserInput: userInput
+         }
+        });
+       } catch(err) {
+         console.log(err);
+       }
    }
   }
   const handleDelete = async (selectedId) => {
