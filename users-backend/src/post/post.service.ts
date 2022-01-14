@@ -24,14 +24,4 @@ export class PostService {
   async posts(): Promise<PostEntity[]> {
     return this.postRepository.find();
   }
-
-  async getManyPosts(postIds: string[]): Promise<PostEntity[]> {
-    return this.postRepository.find({
-      where: {
-        id: {
-          $in: postIds,
-        },
-      },
-    });
-  }
 }

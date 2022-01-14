@@ -5,11 +5,9 @@ import {
   Mutation,
   Args,
   ResolveField,
-  Parent,
 } from '@nestjs/graphql';
 import { PostService } from 'src/post/post.service';
-import { UserEntity } from './user.entity';
-import { AssignPostsToUser, CreateUserInput, DeleteUserResponseType, UpdateUserInput, UserType } from './user.graphql';
+import { CreateUserInput, DeleteUserResponseType, UpdateUserInput, UserType } from './user.graphql';
 import { UserService } from './user.service';
 
 @Resolver(() => UserType)
@@ -43,16 +41,8 @@ export class UserResolver {
     return this.userService.updateUser(id, updateUserInput);
   }
 
-  @Mutation(() => UserType)
-  assignPostsToUser(
-    @Args('assignPostsToUser') assignPostsToUser: AssignPostsToUser,
-  ) {
-    const { userId, userPostIds } = assignPostsToUser;
-    return this.userService.assignPostsToUser(userId, userPostIds);
-  }
-
   @ResolveField()
-  userPosts(@Parent() user: UserEntity) {
-    return this.postService.getManyPosts(user.userPosts);
+  userPosts() {
+    return this.postService.posts();
   }
 }

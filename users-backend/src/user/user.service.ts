@@ -49,13 +49,4 @@ export class UserService {
 
     return { message: `Successfully deleted user of ${found.id}` };
   }
-
-  async assignPostsToUser(
-    userId: string,
-    postIds: string[],
-  ): Promise<UserEntity> {
-    const post = await this.getUser(userId);
-    post.userPosts = [...post.userPosts, ...postIds];
-    return this.userRepository.save(post);
-  }
 }
