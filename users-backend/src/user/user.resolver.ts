@@ -5,8 +5,10 @@ import {
   Mutation,
   Args,
   ResolveField,
+  Parent,
 } from '@nestjs/graphql';
 import { PostService } from 'src/post/post.service';
+import { UserEntity } from './user.entity';
 import { CreateUserInput, DeleteUserResponseType, UpdateUserInput, UserType } from './user.graphql';
 import { UserService } from './user.service';
 
@@ -42,7 +44,7 @@ export class UserResolver {
   }
 
   @ResolveField()
-  userPosts() {
-    return this.postService.posts();
+  userPosts(@Parent() user: UserEntity) {
+    return this.postService.postsCreatedByUser(user.id);
   }
 }

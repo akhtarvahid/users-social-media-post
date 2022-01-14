@@ -24,4 +24,9 @@ export class PostService {
   async posts(): Promise<PostEntity[]> {
     return this.postRepository.find();
   }
+
+  async postsCreatedByUser(id: string): Promise<PostEntity[]> {
+    const posts = await this.posts();
+    return posts.filter(post => post.userId === id);
+  }
 }
