@@ -1,5 +1,5 @@
 import { UserEntity } from 'src/user/user.entity';
-import { Column, Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class PostEntity {
@@ -13,6 +13,7 @@ export class PostEntity {
   userId: string;
 
   @Column(() => UserEntity)
+  @ManyToOne(() => UserEntity, userEntity=> userEntity.userPosts)
   users: UserEntity;
 
   @Column()

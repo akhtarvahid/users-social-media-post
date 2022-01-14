@@ -1,4 +1,5 @@
-import { Column, Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
+import { PostEntity } from 'src/post/post.entity';
+import { Column, Entity, ObjectIdColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -15,11 +16,15 @@ export class UserEntity {
   lastName: string;
 
   @Column()
+  email: string;
+
+  @Column()
   workAt: string;
 
   @Column()
   designation: string;
 
   @Column()
-  userPosts: string[];
+  @OneToMany(() => PostEntity, postEntity=> postEntity.users)
+  userPosts: PostEntity[];
 }
