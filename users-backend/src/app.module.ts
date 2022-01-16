@@ -17,7 +17,7 @@ import { PostEntity } from './post/post.entity';
       entities: [UserEntity, PostEntity],
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: true,
+      autoSchemaFile: 'users-schema.gql',
     }),
     UserModule,
     PostModule,

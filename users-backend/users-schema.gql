@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreatePostInput {
+  userId: String!
+  title: String!
+  votes: Float!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  workAt: String!
+  designation: String!
+}
+
+type DeleteUserResponseType {
+  message: String!
+}
+
+type Mutation {
+  createUser(createUserData: CreateUserInput!): UserType!
+  deleteUser(id: String!): DeleteUserResponseType!
+  updateUser(updateUserInput: UpdateUserInput!, id: String!): UserType!
+  createPost(createPost: CreatePostInput!): PostType!
+}
+
+type PostType {
+  id: String!
+  userId: String!
+  users: UserType!
+  title: String!
+  votes: Float!
+}
+
+type Query {
+  users: [UserType!]!
+  user(userId: String!): UserType!
+  getPosts: [PostType!]!
+}
+
+input UpdateUserInput {
+  firstName: String!
+  lastName: String!
+  workAt: String!
+  designation: String!
+}
+
+type UserType {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  workAt: String!
+  designation: String!
+  userPosts: [PostType!]!
+}
