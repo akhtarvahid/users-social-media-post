@@ -10,7 +10,7 @@ function UserForm({
   isFilled, 
   handleSubmit 
 }) {
-   const { firstName, lastName, workAt, designation } = user; 
+   const { firstName, lastName, email, workAt, designation } = user; 
    return (
        <Box
          sx={{
@@ -21,6 +21,7 @@ function UserForm({
            <FormControl fullWidth>
              <TextField margin='dense' label="First Name" name="firstName" onChange={handleInput} value={firstName} />
              <TextField margin='dense' label="Last Name" name="lastName" onChange={handleInput} value={lastName} />
+             <TextField margin='dense' label="Email" name="email" onChange={handleInput} value={email} />
              <TextField margin='dense' label="Work at" name="workAt" onChange={handleInput} value={workAt} />
              <TextField margin='dense' label="Designation" name="designation" onChange={handleInput} value={designation} />
              <Button style={{ marginTop: '10px' }} variant="contained" disabled={isFilled} onClick={handleSubmit}>Submit</Button>

@@ -8,14 +8,20 @@ import { Divider } from '@mui/material';
 import Loader from './components/Loader';
 import Text from './components/common/Text';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import UserExist from './components/UserExist';
 
 function App() {
   const [isFilled, setIsFilled] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [errors, setErrors] = useState({
+    errMsg: '',
+    existingUser: {}
+  })
   const [updateUserId, setUpdateUserId] = useState(null);
   const [userInput, setUserInput] = useState({
     firstName: '',
     lastName: '',
+    email: '',
     workAt: '',
     designation: ''
   });
@@ -29,12 +35,13 @@ function App() {
 
   useEffect(() => {
      const fields = Object.values(userInput).filter(usr => usr!=='');
-     if(fields.length === 4 && fields.every(usr => usr!=='')) {
+     if(fields.length === 5 && fields.every(usr => usr!=='')) {
         setIsFilled(false);
         if(createUserLoading || updateUserLoading) {
           setUserInput({
           firstName: '',
           lastName: '',
+          email: '',
           workAt: '',
           designation: ''
         })
@@ -69,7 +76,12 @@ function App() {
         }
       });
      } catch(err) {
-       console.log(err);
+       const existingUser = data?.users.find(({ email }) => email === userInput.email);
+       setErrors({
+         ...errors,
+         errMsg: err.message,
+         existingUser
+       })
      }
    } else {
        try {
@@ -97,10 +109,11 @@ function App() {
     refetchUsers();
   }
   const handleEdit = async (selectedId) => {
-    const { firstName, lastName, workAt, designation } = getSingleUser(selectedId);
+    const { firstName, lastName, email, workAt, designation } = getSingleUser(selectedId);
     setUserInput({
       firstName,
       lastName,
+      email,
       workAt,
       designation
     })
@@ -128,6 +141,7 @@ function App() {
         {loading ? <Loader /> : <UsersList deletedSpinner selected={selected} users={data?.users} handleDelete={handleDelete} handleEdit={handleEdit}/>}
        </Grid>
       </Grid>
+      {errors.errMsg && <UserExist errors={errors} />}
     </>
   );
 }
