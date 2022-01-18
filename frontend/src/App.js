@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_USER, DELETE_USER, UPDATE_USER, USERS } from './grahpql/users';
 import UsersList from './components/usersList';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import UserForm from './components/userForm';
 import { Divider } from '@mui/material';
 import Loader from './components/Loader';
@@ -16,11 +17,13 @@ function App() {
   const [errors, setErrors] = useState({
     errMsg: '',
     existingUser: {}
-  })
+  });
+
   const [updateUserId, setUpdateUserId] = useState(null);
   const [userInput, setUserInput] = useState({
     firstName: '',
     lastName: '',
+    locatedAt: '',
     email: '',
     workAt: '',
     designation: ''
@@ -35,12 +38,13 @@ function App() {
 
   useEffect(() => {
      const fields = Object.values(userInput).filter(usr => usr!=='');
-     if(fields.length === 5 && fields.every(usr => usr!=='')) {
+     if(fields.length === 6 && fields.every(usr => usr!=='')) {
         setIsFilled(false);
         if(createUserLoading || updateUserLoading) {
           setUserInput({
           firstName: '',
           lastName: '',
+          locatedAt: '',
           email: '',
           workAt: '',
           designation: ''
@@ -49,11 +53,12 @@ function App() {
         refetchUsers();
       }
      }
-  }, [userInput, 
+  }, [
+    userInput, 
     createUserLoading, 
     updateUserLoading, 
-    refetchUsers]
-)
+    refetchUsers
+  ])
 
   const getSingleUser = (userId) => data?.users.find(({ id }) => id === userId)
 
@@ -86,12 +91,20 @@ function App() {
    } else {
        try {
         const getUser = getSingleUser(updateUserId);
+        const { firstName, lastName, workAt, locatedAt, designation } = userInput;
         await updateUser({
          variables: {
            id: getUser.id,
-           updateUserInput: userInput
+           updateUserInput: {
+             firstName,
+             lastName,
+             workAt,
+             locatedAt,
+             designation
+           }
          }
         });
+        setUpdateUserId(null);
        } catch(err) {
          console.log(err);
        }
@@ -108,11 +121,13 @@ function App() {
     }, 1000);
     refetchUsers();
   }
+
   const handleEdit = async (selectedId) => {
-    const { firstName, lastName, email, workAt, designation } = getSingleUser(selectedId);
+    const { firstName, lastName, email, workAt, locatedAt, designation } = getSingleUser(selectedId);
     setUserInput({
       firstName,
       lastName,
+      locatedAt,
       email,
       workAt,
       designation
@@ -120,9 +135,23 @@ function App() {
     setIsFilled(false);
     setUpdateUserId(selectedId);
   }
+
   if(error) {
-    return <h1>Something went wrong</h1>
+    return <h1>Oops, Something went wrong!</h1>
   }
+
+  if(createUserLoading || updateUserLoading) {
+    return (
+       <Box 
+         display='flex' 
+         justifyContent='center' 
+         alignItems='center' 
+         sx={{ height: '100vh' }}>
+        <Loader />
+      </Box>
+      )
+  }
+
   return (
     <>
       <Grid container bgcolor='#005a53' color='#fff' padding='30px 0px 30px 30px' marginBottom='30px'>
@@ -134,11 +163,24 @@ function App() {
       </Divider>
       <Grid container spacing={2} padding='20px'>
        <Grid item xs={12} md={8} display={createUserLoading ? 'flex' : 'block'} justifyContent='center'>
-        {createUserLoading ? <Loader /> :  <UserForm user={userInput} handleInput={handleInput} isFilled={isFilled} handleSubmit={handleSubmit} />}
+        {createUserLoading ? <Loader /> :  
+          <UserForm 
+            user={userInput} 
+            handleInput={handleInput} 
+            isFilled={isFilled} 
+            handleSubmit={handleSubmit} 
+            updateUserId={updateUserId} 
+        />}
        </Grid>
        <Grid item xs={12} md={4}>
         <Text content='Users list' component='h3' />
-        {loading ? <Loader /> : <UsersList deletedSpinner selected={selected} users={data?.users} handleDelete={handleDelete} handleEdit={handleEdit}/>}
+        {loading ?  <Loader /> : 
+          <UsersList 
+            selected={selected} 
+            users={data?.users} 
+            handleDelete={handleDelete} 
+            handleEdit={handleEdit}
+          />}
        </Grid>
       </Grid>
       {errors.errMsg && <UserExist errors={errors} />}

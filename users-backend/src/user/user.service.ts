@@ -39,12 +39,13 @@ export class UserService {
   }
 
   async updateUser(id: string, updateUserInput: UpdateUserInput): Promise<UserEntity> {
-     const { firstName, lastName, workAt, designation } = updateUserInput;
+     const { firstName, lastName, workAt, locatedAt, designation } = updateUserInput;
      let user = await this.getUser(id);
      user = {
        ...user,
        firstName,
        lastName,
+       locatedAt,
        workAt,
        designation
      }

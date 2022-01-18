@@ -19,6 +19,9 @@ export class UserEntity {
   email: string;
 
   @Column()
+  locatedAt: string;
+
+  @Column()
   workAt: string;
 
   @Column()

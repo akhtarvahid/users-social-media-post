@@ -5,6 +5,7 @@ const usersFragment = gql`
     id
     firstName
     lastName
+    locatedAt
     email
     workAt
     designation

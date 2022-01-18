@@ -1,6 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { PostType } from 'src/post/post.graphql';
+
 @ObjectType()
 export class UserType {
   @Field()
@@ -15,6 +16,9 @@ export class UserType {
   @Field()
   @IsEmail()
   email: string;
+
+  @Field()
+  locatedAt: string;
 
   @Field()
   workAt: string;
@@ -45,6 +49,10 @@ export class CreateUserInput {
 
   @Field()
   @IsOptional()
+  locatedAt: string;
+
+  @Field()
+  @IsOptional()
   workAt: string;
 
   @Field()
@@ -61,6 +69,10 @@ export class UpdateUserInput {
   @Field()
   @IsOptional()
   lastName: string;
+
+  @Field()
+  @IsOptional()
+  locatedAt: string;
 
   @Field()
   @IsOptional()

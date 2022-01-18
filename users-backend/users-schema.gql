@@ -12,6 +12,7 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   email: String!
+  locatedAt: String!
   workAt: String!
   designation: String!
 }
@@ -44,6 +45,7 @@ type Query {
 input UpdateUserInput {
   firstName: String!
   lastName: String!
+  locatedAt: String!
   workAt: String!
   designation: String!
 }
@@ -53,6 +55,7 @@ type UserType {
   firstName: String!
   lastName: String!
   email: String!
+  locatedAt: String!
   workAt: String!
   designation: String!
   userPosts: [PostType!]!
