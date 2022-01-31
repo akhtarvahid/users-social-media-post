@@ -21,4 +21,7 @@ export class PostEntity {
 
   @Column()
   votes: number;
+
+  @Column()
+  createdAt: Date;
 }

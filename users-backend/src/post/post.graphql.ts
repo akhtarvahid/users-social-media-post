@@ -17,6 +17,9 @@ export class PostType {
 
   @Field()
   votes: number;
+
+  @Field()
+  createdAt: string;
 }
 
 @InputType()

@@ -16,6 +16,7 @@ export class PostService {
     const post = this.postRepository.create({
       id: uuid(),
       ...createPostInput,
+      createdAt: Date()
     });
 
     return this.postRepository.save(post);

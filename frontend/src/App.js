@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from "@apollo/client";
+import { NetworkStatus, useMutation, useQuery } from "@apollo/client";
 import { CREATE_USER, DELETE_USER, UPDATE_USER, USERS } from './grahpql/users';
 import UsersList from './components/usersList';
 import Grid from '@mui/material/Grid';
@@ -29,8 +29,10 @@ function App() {
     designation: ''
   });
 
-  const { loading, error, data, refetch: refetchUsers } = useQuery(USERS, {
+  const { loading, error, data, refetch: refetchUsers, networkStatus } = useQuery(USERS, {
     fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
+    notifyOnNetworkStatusChange: true,
   });
   const [createUser, {loading: createUserLoading}] = useMutation(CREATE_USER);
   const [deleteUser] = useMutation(DELETE_USER, { refetchQueries: [{ query: USERS }], });
@@ -139,6 +141,9 @@ function App() {
   if(error) {
     return <h1>Oops, Something went wrong!</h1>
   }
+
+  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
+
 
   if(createUserLoading || updateUserLoading) {
     return (

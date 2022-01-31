@@ -34,6 +34,7 @@ type PostType {
   users: UserType!
   title: String!
   votes: Float!
+  createdAt: String!
 }
 
 type Query {
