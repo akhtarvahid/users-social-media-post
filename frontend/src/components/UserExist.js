@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: 'absolute',
@@ -19,6 +20,7 @@ const style = {
 };
 
 export default function UserExist({ errors }) {
+  const navigate = useNavigate();
   const status = errors?.errMsg!=='' ? true : false;
   const [open, setOpen] = React.useState(status);
   const handleClose = () => setOpen(false);
@@ -38,7 +40,7 @@ export default function UserExist({ errors }) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
+            <Typography id="transition-modal-title" variant="h6" component="h2" color='error'>
               {errors.errMsg}
             </Typography>
             <Typography color="primary">
@@ -49,10 +51,18 @@ export default function UserExist({ errors }) {
             </Typography>
             <hr />
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Please try with other email
+              Please try with other email or navigate to your profile
             </Typography>
-            <Typography style={{ display: 'flex', justifyContent: 'flex-end', color: '#005a53', fontSize: '16px'}}>
-              <ArrowCircleRightIcon />
+            <Typography 
+               onClick={() => navigate(`/${errors.existingUser.id}`)}
+               style={{ 
+                    display: 'flex', 
+                    justifyContent: 'flex-end', 
+                    color: '#005a53', 
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                }}>
+              <ArrowCircleRightIcon style={{ height: '50px', width: '50px' }}/>
             </Typography>
           </Box>
         </Fade>

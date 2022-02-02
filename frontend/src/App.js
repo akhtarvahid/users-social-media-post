@@ -10,6 +10,9 @@ import Loader from './components/Loader';
 import Text from './components/common/Text';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import UserExist from './components/UserExist';
+import { Route, Routes } from 'react-router-dom';
+import UserProfile from './components/user-profile/UserProfile';
+import Header from './components/common/Header';
 
 function App() {
   const [isFilled, setIsFilled] = useState(true);
@@ -157,40 +160,52 @@ function App() {
       )
   }
 
+  const renderApp = () => {
+    return (
+      <>
+        <Divider>
+          <Text content='Create Users' component='h3' />
+          <AddCircleIcon color='success' />
+        </Divider>
+        <Grid container spacing={2} padding='20px'>
+         <Grid item xs={12} md={8} display={createUserLoading ? 'flex' : 'block'} justifyContent='center'>
+          {createUserLoading ? <Loader /> :  
+            <UserForm 
+              user={userInput} 
+              handleInput={handleInput} 
+              isFilled={isFilled} 
+              handleSubmit={handleSubmit} 
+              updateUserId={updateUserId} 
+          />}
+         </Grid>
+         <Grid item xs={12} md={4}>
+          <Text content='Users list' component='h3' />
+          {loading ?  <Loader /> : 
+            <UsersList 
+              selected={selected} 
+              users={data?.users} 
+              handleDelete={handleDelete} 
+              handleEdit={handleEdit}
+            />}
+         </Grid>
+        </Grid>
+        {errors.errMsg && <UserExist errors={errors} />}
+      </>
+    );
+  };
+
   return (
     <>
-      <Grid container bgcolor='#005a53' color='#fff' padding='30px 0px 30px 30px' marginBottom='30px'>
-        <Text content='Users social media post' component='h1' />
-      </Grid>
-      <Divider>
-        <Text content='Create Users' component='h3' />
-        <AddCircleIcon color='success' />
-      </Divider>
-      <Grid container spacing={2} padding='20px'>
-       <Grid item xs={12} md={8} display={createUserLoading ? 'flex' : 'block'} justifyContent='center'>
-        {createUserLoading ? <Loader /> :  
-          <UserForm 
-            user={userInput} 
-            handleInput={handleInput} 
-            isFilled={isFilled} 
-            handleSubmit={handleSubmit} 
-            updateUserId={updateUserId} 
-        />}
-       </Grid>
-       <Grid item xs={12} md={4}>
-        <Text content='Users list' component='h3' />
-        {loading ?  <Loader /> : 
-          <UsersList 
-            selected={selected} 
-            users={data?.users} 
-            handleDelete={handleDelete} 
-            handleEdit={handleEdit}
-          />}
-       </Grid>
-      </Grid>
-      {errors.errMsg && <UserExist errors={errors} />}
+    <Header />
+    <Routes>
+      <Route path="/" element={renderApp()} />
+      <Route
+        path="/:id"
+        element={<UserProfile />}
+      />
+    </Routes>
     </>
-  );
+  )
 }
 
 export default App;

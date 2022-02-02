@@ -20,6 +20,15 @@ export const USERS = gql`
   ${usersFragment}
 `;
 
+export const USER = gql`
+  query user($id: String!) {
+   user(userId: $id) {
+     ...UserTypeFragment
+   }
+ }
+  ${usersFragment}
+`;
+
 export const CREATE_USER = gql`
    mutation CreateUser($createUserData: CreateUserInput!) {
     createUser(createUserData: $createUserData) {
