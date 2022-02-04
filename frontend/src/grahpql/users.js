@@ -24,6 +24,10 @@ export const USER = gql`
   query user($id: String!) {
    user(userId: $id) {
      ...UserTypeFragment
+     userPosts {
+       title
+       createdAt
+     }
    }
  }
   ${usersFragment}
