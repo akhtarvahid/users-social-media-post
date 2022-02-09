@@ -58,3 +58,24 @@ export const UPDATE_USER = gql`
 }
   ${usersFragment}
 `;
+
+export const POSTS = gql`
+ query getPosts {
+  getPosts {
+    id
+    userId
+    users {
+      id
+      firstName
+      lastName
+      email
+      locatedAt
+      workAt
+      designation
+    }
+    title
+    votes
+    createdAt
+  }
+}
+`;

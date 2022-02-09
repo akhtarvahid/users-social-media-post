@@ -11,9 +11,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Loader from './Loader';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function UsersList({ selected, users, handleDelete, handleEdit }) {
-  
+    const navigate = useNavigate();
     const [limit, setLimit] = useState(5);
 
     return (
@@ -22,7 +23,8 @@ export default function UsersList({ selected, users, handleDelete, handleEdit })
          {users?.length > 0 ? users?.slice(0, limit).map((user, i) => 
           <React.Fragment key={user.id}>
           {(user.id !== selected) ? 
-          <ListItem alignItems="flex-start" style={{ position: 'relative' }}>
+          <ListItem alignItems="flex-start" 
+            style={{ position: 'relative', cursor: 'pointer' }} onClick={() => navigate(`/${user.id}`)}>
             <ListItemAvatar>
               <Avatar style={{ backgroundColor: '#005a53'}} alt={user.firstName} src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
