@@ -29,18 +29,19 @@ export default function UserProfile() {
     const navigate = useNavigate();
  
     const { loading, error, data } = useQuery(USER, {
-        fetchPolicy: "network-only",
-        nextFetchPolicy: "cache-first",
+        fetchPolicy: 'no-cache',
         variables: {
             id
         },
         skip: !id
       });
+      console.log(data);
 
     if(loading) return <Loader />
     if(error) return <h1>Something went wrong...</h1>
 
     const posts = data?.user?.userPosts;
+
 
     return (
       <>

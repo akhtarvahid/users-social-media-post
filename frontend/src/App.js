@@ -33,8 +33,7 @@ function App() {
   });
 
   const { loading, error, data, refetch: refetchUsers, networkStatus } = useQuery(USERS, {
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-first",
+    fetchPolicy: "no-cache",
     notifyOnNetworkStatusChange: true,
   });
   const [createUser, {loading: createUserLoading}] = useMutation(CREATE_USER);
@@ -145,7 +144,7 @@ function App() {
     return <h1>Oops, Something went wrong!</h1>
   }
 
-  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
+  if (networkStatus === NetworkStatus.refetch) return 'fetching again!';
 
 
   if(createUserLoading || updateUserLoading) {

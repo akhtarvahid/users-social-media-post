@@ -32,6 +32,7 @@ Download and install docker based on your devices(Linux/Windows/Mac) - https://d
 
   ``npm start``
 
+* Frontend running application - http://localhost:3000/
   
 
 ### To check local database
