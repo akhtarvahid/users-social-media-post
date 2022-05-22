@@ -26,8 +26,8 @@ function UserForm({
              <TextField margin='dense' label="Located at" name="locatedAt" onChange={handleInput} value={locatedAt} />
              <TextField margin='dense' label="Work at" name="workAt" onChange={handleInput} value={workAt} />
              <TextField margin='dense' label="Designation" name="designation" onChange={handleInput} value={designation} />
-             <Button style={{ marginTop: '10px' }} variant="contained" disabled={isFilled} onClick={handleSubmit}>Submit</Button>
            </FormControl>
+           <Button style={{ marginTop: '10px', width: 200 }} variant="contained" disabled={isFilled} onClick={handleSubmit}>Submit</Button>
        </Box>
     )
 }

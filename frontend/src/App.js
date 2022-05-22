@@ -163,7 +163,6 @@ function App() {
     return (
       <>
         <Divider>
-          <Text content='Create Users' component='h3' />
           <AddCircleIcon color='success' />
         </Divider>
         <Grid container spacing={2} padding='20px'>
