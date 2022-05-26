@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import { Avatar, Button, Divider } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { USER } from '../../grahpql/users';
+import { USER } from '../../grahpql/user-queries';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -56,7 +56,7 @@ export default function UserProfile() {
         })
       }
 
-    if(loading) return <Loader />
+    if(loading || createPostLoading) return <Loader />
     if(error) return <h1>Something went wrong...</h1>
 
     const posts = data?.user?.userPosts;
@@ -126,7 +126,7 @@ export default function UserProfile() {
           {(i + 1 !== posts?.length) && <Divider variant="inset" component="li" />}
             </React.Fragment>   
           ):
-          <Text content='Records not found!' component='p' />
+          <Text content='There is no posts created or available!' component='p' />
           }
       </List>
        </Item>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NetworkStatus, useMutation, useQuery } from "@apollo/client";
-import { CREATE_USER, DELETE_USER, UPDATE_USER, USERS } from './grahpql/users';
+import { CREATE_USER, DELETE_USER, UPDATE_USER, USERS } from './grahpql/user-queries';
 import UsersList from './components/usersList';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
