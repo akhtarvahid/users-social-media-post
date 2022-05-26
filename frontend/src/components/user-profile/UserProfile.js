@@ -1,5 +1,5 @@
-import React from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useState } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
 import { Avatar, Button, Divider } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { USER } from '../../grahpql/users';
@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import { CREATE_POST } from '../../grahpql/post-queries';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -27,6 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function UserProfile() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [input, setInput] = useState('');
  
     const { loading, error, data } = useQuery(USER, {
         fetchPolicy: 'no-cache',
@@ -35,7 +37,24 @@ export default function UserProfile() {
         },
         skip: !id
       });
-      console.log(data);
+
+      const [createPost, {loading: createPostLoading}] = useMutation(CREATE_POST);
+      const handleChangePost = (e) => {
+        setInput(e.target.value);
+      }
+
+      const handleCreatePost = () => {
+        const postInput = {
+          userId: id,
+          title: input,
+          votes: Math.floor(Math.random() * 10000, 10)
+        }
+        createPost({
+          variables: {
+            createPost: postInput
+          }
+        })
+      }
 
     if(loading) return <Loader />
     if(error) return <h1>Something went wrong...</h1>
@@ -90,8 +109,9 @@ export default function UserProfile() {
           placeholder="Write to create your post"
           multiline
           fullWidth
+          onChange={handleChangePost}
         />
-        <Button style={{ margin: '0 0 0 20px' }} size="large" variant="contained" onClick={() => console.log('Create post click')}>Post</Button>
+        <Button style={{ margin: '0 0 0 20px' }} size="large" variant="contained" onClick={handleCreatePost}>Post</Button>
         </Grid>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
          {posts?.length > 0 ? posts?.map((post, i) => 
