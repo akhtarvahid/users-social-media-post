@@ -24,11 +24,12 @@ export default function UsersList({ selected, users, handleDelete, handleEdit })
           <React.Fragment key={user.id}>
           {(user.id !== selected) ? 
           <ListItem alignItems="flex-start" 
-            style={{ position: 'relative', cursor: 'pointer' }} onClick={() => navigate(`/${user.id}`)}>
+            style={{ position: 'relative', cursor: 'pointer' }}>
             <ListItemAvatar>
               <Avatar style={{ backgroundColor: '#005a53'}} alt={user.firstName} src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
             <ListItemText
+              onClick={() => navigate(`/${user.id}`)}
               primary={
                 <span style={{ fontWeight: 600, color: "#005a53" }}>
                 {`${(user.firstName?.length > 10 || user.lastName?.length > 10) 
