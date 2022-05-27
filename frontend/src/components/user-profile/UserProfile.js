@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import { Avatar, Button, Divider } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -29,16 +29,26 @@ export default function UserProfile() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [input, setInput] = useState('');
- 
-    const { loading, error, data } = useQuery(USER, {
-        fetchPolicy: 'no-cache',
-        variables: {
-            id
-        },
-        skip: !id
-      });
+    const [isLoading, setIsLoading] = useState(false);
+    const { refetch: refetchUser, loading, error, data } = useQuery(USER, {
+      fetchPolicy: 'no-cache',
+      variables: {
+          id
+      },
+      skip: !id
+    });
+    const [createPost, {loading: createPostLoading}] = useMutation(CREATE_POST);
 
-      const [createPost, {loading: createPostLoading}] = useMutation(CREATE_POST);
+    useEffect(() => {
+      if(isLoading) {
+        setTimeout(() => {
+          setIsLoading(false);
+          refetchUser();
+        }, 500)
+      }
+    }, [isLoading, refetchUser])
+ 
+
       const handleChangePost = (e) => {
         setInput(e.target.value);
       }
@@ -54,6 +64,7 @@ export default function UserProfile() {
             createPost: postInput
           }
         })
+        setIsLoading(true);
       }
 
     if(loading || createPostLoading) return <Loader />
@@ -113,7 +124,7 @@ export default function UserProfile() {
         />
         <Button style={{ margin: '0 0 0 20px' }} size="large" variant="contained" onClick={handleCreatePost}>Post</Button>
         </Grid>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
+        {!isLoading ? <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
          {posts?.length > 0 ? posts?.map((post, i) => 
           <React.Fragment key={post.id}>
           <ListItem alignItems="center" 
@@ -125,10 +136,9 @@ export default function UserProfile() {
           </ListItem>
           {(i + 1 !== posts?.length) && <Divider variant="inset" component="li" />}
             </React.Fragment>   
-          ):
-          <Text content='There is no posts created or available!' component='p' />
+          ):<Text content='There is no posts created or available!' component='p' />
           }
-      </List>
+        </List> : <Loader />}
        </Item>
       </Grid>
      </Grid>

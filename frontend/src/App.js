@@ -195,6 +195,7 @@ function App() {
   return (
     <>
     <Header />
+    <h3>Register and create your posts</h3>
     <Routes>
       <Route path="/" element={renderApp()} />
       <Route
