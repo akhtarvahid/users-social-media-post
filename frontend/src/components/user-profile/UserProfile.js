@@ -112,7 +112,7 @@ export default function UserProfile() {
          </Item>
        </Grid>
        <Grid item xs={12} md={8}>
-       <Item>
+       <Item style={{ height: '100vh' }}>
         <Grid xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <TextField
           id="outlined-textarea"
@@ -133,6 +133,7 @@ export default function UserProfile() {
               <Avatar style={{ backgroundColor: '#1976d2'}} alt={post.title} src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
             <Text content={post.title} component='div'/>
+            <Text content={post.createdAt} component='span'/>
           </ListItem>
           {(i + 1 !== posts?.length) && <Divider variant="inset" component="li" />}
             </React.Fragment>   
