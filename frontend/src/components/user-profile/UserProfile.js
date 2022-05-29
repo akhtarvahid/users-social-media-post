@@ -71,6 +71,14 @@ export default function UserProfile() {
     if(error) return <h1>Something went wrong...</h1>
 
     const posts = data?.user?.userPosts;
+    const renderDate = date => {
+      const parsedDate = new Date(date);
+      const dayDate = parsedDate.getDate();
+      const month = parsedDate.getMonth();
+      const year = parsedDate.getFullYear();
+      const minute = parsedDate.getMinutes();
+      return `At ${minute} on ${dayDate} ${month} ${year}`;
+    }
 
 
     return (
@@ -124,16 +132,18 @@ export default function UserProfile() {
         />
         <Button style={{ margin: '0 0 0 20px' }} size="large" variant="contained" onClick={handleCreatePost}>Post</Button>
         </Grid>
-        {!isLoading ? <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
+        {!isLoading ? <List sx={{ maxWidth: '68%', bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
          {posts?.length > 0 ? posts?.map((post, i) => 
           <React.Fragment key={post.id}>
           <ListItem alignItems="center" 
-            style={{ position: 'relative', cursor: 'pointer' }} onClick={() => navigate(`/${post.id}`)}>
+            style={{ position: 'relative', cursor: 'pointer', display:'flex', justifyContent:'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center'}}>
             <ListItemAvatar>
               <Avatar style={{ backgroundColor: '#1976d2'}} alt={post.title} src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
             <Text content={post.title} component='div'/>
-            <Text content={post.createdAt} component='span'/>
+            </div>
+            <Text content={renderDate(post.createdAt)} component='span'/>
           </ListItem>
           {(i + 1 !== posts?.length) && <Divider variant="inset" component="li" />}
             </React.Fragment>   
