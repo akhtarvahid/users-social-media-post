@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Text from '../common/Text';
 import Loader from '../Loader';
 import TextField from '@mui/material/TextField';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -76,8 +77,7 @@ export default function UserProfile() {
       const dayDate = parsedDate.getDate();
       const month = parsedDate.getMonth();
       const year = parsedDate.getFullYear();
-      const minute = parsedDate.getMinutes();
-      return `At ${minute} on ${dayDate} ${month} ${year}`;
+      return `${dayDate} ${month} ${year}`;
     }
 
 
@@ -143,7 +143,10 @@ export default function UserProfile() {
             </ListItemAvatar>
             <Text content={post.title} component='div'/>
             </div>
-            <Text content={renderDate(post.createdAt)} component='span'/>
+            <div style={{ display: 'flex', alignItems: 'center'}}>
+            <AccessTimeIcon color='red'/>
+            <Text content={renderDate(post.createdAt)} component='span' marginLeft="5px"/>
+            </div>
           </ListItem>
           {(i + 1 !== posts?.length) && <Divider variant="inset" component="li" />}
             </React.Fragment>   
