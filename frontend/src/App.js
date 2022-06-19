@@ -195,7 +195,6 @@ function App() {
   return (
     <>
     <Header />
-    <Text style={{ fontSize: 24, marginLeft: 25}} content='Register yourself to create your posts' component='div' />
     <Routes>
       <Route path="/" element={renderApp()} />
       <Route
