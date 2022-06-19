@@ -27,16 +27,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function UserProfile() {
-    const { id } = useParams();
+    const params = useParams();
     const navigate = useNavigate();
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const { refetch: refetchUser, loading, error, data } = useQuery(USER, {
       fetchPolicy: 'no-cache',
       variables: {
-          id
+          id: params.id
       },
-      skip: !id
+      skip: !params.id
     });
     const [createPost, {loading: createPostLoading}] = useMutation(CREATE_POST);
 
@@ -56,7 +56,7 @@ export default function UserProfile() {
 
       const handleCreatePost = () => {
         const postInput = {
-          userId: id,
+          userId: params.id,
           title: input,
           votes: Math.floor(Math.random() * 10000, 10)
         }
@@ -80,10 +80,10 @@ export default function UserProfile() {
       return `${dayDate} ${month} ${year}`;
     }
 
-
     return (
       <>
-      <Button style={{ marginTop: '10px' }} variant="outlined" onClick={() => navigate('/')}>Back</Button>
+      <Text style={{ fontSize: 30, marginLeft: 25}} content='Create your posts' component='div' />
+      <Button style={{ margin: '25px 0px 8px 25px' }} variant="outlined" onClick={() => navigate('/')}>Back</Button>
       <Divider style={{ backgroundColor: '#005a53', margin: '20px 0px' }} />
       <Grid container spacing={6}>
        <Grid item xs={12} md={4}>

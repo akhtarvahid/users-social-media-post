@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
+import Text from './common/Text';
 
 function UserForm({ 
   user, 
@@ -19,6 +20,7 @@ function UserForm({
           px: 1        
          }}
          >
+           <Text style={{ fontSize: 30, margin: '0 0 20px 0', fontWeight: 600 }} content='Register yourself to create your posts' component='div' />
            <FormControl fullWidth>
              <TextField margin='dense' label="First Name" name="firstName" onChange={handleInput} value={firstName} />
              <TextField margin='dense' label="Last Name" name="lastName" onChange={handleInput} value={lastName} />
