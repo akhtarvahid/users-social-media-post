@@ -77,7 +77,7 @@ export default function UserProfile() {
       const dayDate = parsedDate.getDate();
       const month = parsedDate.getMonth();
       const year = parsedDate.getFullYear();
-      return `${dayDate} ${month} ${year}`;
+      return `${dayDate}-${month}-${year}`;
     }
 
     return (
