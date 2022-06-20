@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CreateUserInput, UpdateUserInput } from './user.graphql';
 import { v4 as uuid } from 'uuid';
+import { USER_EXIST, USER_NOT_FOUND } from 'src/constant';
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
   async getUser(id: string): Promise<UserEntity> {
     const found = await this.userRepository.findOne({ id });
     if (!found)
-      throw new HttpException("User doesn't not found!", HttpStatus.NOT_FOUND);
+      throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     else return found;
   }
 
@@ -32,7 +33,7 @@ export class UserService {
     const users = await this.getUsers();
     const userExist = users.find(({ email }) => email === createUserInput.email);
     if(userExist) {
-      throw new ConflictException('User already exist with this email');
+      throw new ConflictException(USER_EXIST);
     }
 
     return this.userRepository.save(user);
