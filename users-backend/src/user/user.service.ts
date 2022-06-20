@@ -9,8 +9,7 @@ import { USER_EXIST, USER_NOT_FOUND } from 'src/constant';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
   ) {}
 
   async getUsers(): Promise<UserEntity[]> {
@@ -21,7 +20,8 @@ export class UserService {
     const found = await this.userRepository.findOne({ id });
     if (!found)
       throw new HttpException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
-    else return found;
+    else 
+    return found;
   }
 
   async createUser(createUserInput: CreateUserInput): Promise<UserEntity> {
