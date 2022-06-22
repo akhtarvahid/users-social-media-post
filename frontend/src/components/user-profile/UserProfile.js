@@ -121,7 +121,7 @@ export default function UserProfile() {
        </Grid>
        <Grid item xs={12} md={8}>
        <Item style={{ height: '100vh' }}>
-        <Grid xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Grid item xs={12} md={8} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <TextField
           id="outlined-textarea"
           label="Create your post"
