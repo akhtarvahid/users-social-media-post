@@ -28,6 +28,6 @@ export class PostService {
 
   async postsCreatedByUser(id: string): Promise<PostEntity[]> {
     const posts = await this.posts();
-    return posts.filter(post => post.userId === id);
+    return posts.filter(({ userId }) => userId === id);
   }
 }

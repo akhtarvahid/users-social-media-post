@@ -25,6 +25,7 @@ export const USER = gql`
    user(userId: $id) {
      ...UserTypeFragment
      userPosts {
+       id
        title
        createdAt
      }
