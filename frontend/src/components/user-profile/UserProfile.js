@@ -68,8 +68,8 @@ export default function UserProfile() {
         setIsLoading(true);
       }
 
-    if(loading || createPostLoading) return <Loader />
-    if(error) return <h1>Something went wrong...</h1>
+    if(loading || createPostLoading) return <Loader />;
+    if(error) return <h1>Something went wrong...</h1>;
 
     const posts = data?.user?.userPosts;
     const renderDate = date => {
