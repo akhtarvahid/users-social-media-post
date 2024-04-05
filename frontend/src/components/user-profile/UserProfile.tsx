@@ -50,7 +50,7 @@ export default function UserProfile() {
     }, [isLoading, refetchUser])
  
 
-      const handleChangePost = (e) => {
+      const handleChangePost = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
       }
 
@@ -58,7 +58,7 @@ export default function UserProfile() {
         const postInput = {
           userId: params.id,
           title: input,
-          votes: Math.floor(Math.random() * 10000, 10)
+          votes: Math.floor(Math.random() * 10000)
         }
         createPost({
           variables: {
@@ -71,8 +71,8 @@ export default function UserProfile() {
     if(loading || createPostLoading) return <Loader />;
     if(error) return <h1>Something went wrong...</h1>;
 
-    const posts = data?.user?.userPosts;
-    const renderDate = date => {
+    const posts: any = data?.user?.userPosts;
+    const renderDate = (date: Date) => {
       const parsedDate = new Date(date);
       const dayDate = parsedDate.getDate();
       const month = parsedDate.getMonth();
@@ -133,7 +133,7 @@ export default function UserProfile() {
         <Button style={{ margin: '0 0 0 20px' }} size="large" variant="contained" onClick={handleCreatePost}>Post</Button>
         </Grid>
         {!isLoading ? <List sx={{ maxWidth: '68%', bgcolor: 'background.paper', margin: '0px 0px 10px' }}>
-         {posts?.length > 0 ? posts?.map((post, i) => 
+         {posts?.length > 0 ? posts?.map((post: any, i: number) => 
           <React.Fragment key={post.id}>
           <ListItem alignItems="center" 
             style={{ position: 'relative', cursor: 'pointer', display:'flex', justifyContent:'space-between' }}>
@@ -144,7 +144,7 @@ export default function UserProfile() {
             <Text content={post.title} component='div'/>
             </div>
             <div style={{ display: 'flex', alignItems: 'center'}}>
-            <AccessTimeIcon color='red'/>
+            <AccessTimeIcon color='error'/>
             <Text content={renderDate(post.createdAt)} component='span' marginLeft="5px"/>
             </div>
           </ListItem>

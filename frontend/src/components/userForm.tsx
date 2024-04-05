@@ -5,7 +5,28 @@ import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import Text from "./common/Text";
 
-function UserForm({ user, handleInput, isFilled, handleSubmit, updateUserId }) {
+export interface UserForm {
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    workAt: string;
+    locatedAt: string;
+    designation: string;
+  };
+  handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isFilled: boolean;
+  handleSubmit: (e: React.FormEvent<HTMLButtonElement>) => void;
+  updateUserId: string | null;
+}
+
+function UserForm({
+  user,
+  handleInput,
+  isFilled,
+  handleSubmit,
+  updateUserId,
+}: UserForm) {
   const { firstName, lastName, email, workAt, locatedAt, designation } = user;
   return (
     <Box

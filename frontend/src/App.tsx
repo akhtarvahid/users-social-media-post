@@ -27,15 +27,31 @@ const initialState = {
   workAt: "",
   designation: "",
 };
+
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  workAt: string;
+  locatedAt: string;
+  designation: string;
+}
+
 function App() {
   const [isFilled, setIsFilled] = useState(true);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const [errors, setErrors] = useState({
     errMsg: "",
-    existingUser: {},
+    existingUser: {
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: ''
+    },
   });
 
-  const [updateUserId, setUpdateUserId] = useState(null);
+  const [updateUserId, setUpdateUserId] = useState<string | null>(null);
   const [userInput, setUserInput] = useState(initialState);
 
   const {
@@ -66,9 +82,10 @@ function App() {
     }
   }, [userInput, createUserLoading, updateUserLoading, refetchUsers]);
 
-  const getSingleUser = (userId) => data?.users.find(({ id }) => id === userId);
+  const getSingleUser = (userId: string) =>
+    data?.users?.find((user: any) => user?.id === userId);
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserInput({
       ...userInput,
@@ -76,7 +93,7 @@ function App() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (updateUserId === null) {
@@ -87,13 +104,13 @@ function App() {
           },
         });
         refetchUsers();
-      } catch (err) {
+      } catch (err: any) {
         const existingUser = data?.users.find(
-          ({ email }) => email === userInput.email
+          (user: User) => user?.email === userInput.email
         );
         setErrors({
           ...errors,
-          errMsg: err.message,
+          errMsg: err?.message,
           existingUser,
         });
       }
@@ -120,7 +137,7 @@ function App() {
       }
     }
   };
-  const handleDelete = async (selectedId) => {
+  const handleDelete = async (selectedId: string) => {
     setSelected(selectedId);
     setTimeout(async () => {
       await deleteUser({
@@ -132,7 +149,7 @@ function App() {
     refetchUsers();
   };
 
-  const handleEdit = async (selectedId) => {
+  const handleEdit = async (selectedId: string) => {
     const { firstName, lastName, email, workAt, locatedAt, designation } =
       getSingleUser(selectedId);
     setUserInput({

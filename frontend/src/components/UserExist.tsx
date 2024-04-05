@@ -19,7 +19,19 @@ const style = {
   p: 4,
 };
 
-export default function UserExist({ errors }) {
+interface UserExistProps {
+  errors: {
+    errMsg: string;
+    existingUser: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+  };
+}
+
+export default function UserExist({ errors }: UserExistProps) {
   const navigate = useNavigate();
   const status = errors?.errMsg !== "" ? true : false;
   const [open, setOpen] = React.useState(status);
